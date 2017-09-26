@@ -73,6 +73,7 @@ namespace nicold_visualstudio_to_lametric.Controllers
                 Response.Cookies.Append("lametric-auth-accesstoken", token.access_token);
                 Response.Cookies.Append("lametric-email", profile.emailAddress);
                 Response.Cookies.Append("lametric-name", profile.displayName);
+                Response.Cookies.Append("lametric-vso-url", lametricEntity.VSO_Url);
 
                 return this.RedirectToAction("Index", "Home");
             }

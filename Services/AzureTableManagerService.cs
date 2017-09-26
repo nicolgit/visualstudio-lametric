@@ -16,25 +16,7 @@ namespace nicold.visualstudio.to.lametric.Services
         {
             _settings = settings;
         }
-
-        /*
-        async Task<bool> IAzureTableManager.UpdateRow(string email, string url, string accesstoken, string refreshtoken, int changeset)
-        {
-            var table = await _getTableObject();
-
-            LametricEntity row1 = new LametricEntity(email);
-            row1.Email = email;
-            row1.VSO_Url = url;
-            row1.AccessToken = accesstoken;
-            row1.RefreshToken = refreshtoken;
-            row1.LastChangeset = changeset;
-
-            TableOperation insertOperation = TableOperation.InsertOrReplace(row1);
-            await table.ExecuteAsync(insertOperation);
-
-            return true;
-        }*/
-
+        
         async Task<bool> IAzureTableManager.UpdateRow(LametricEntity row)
         {
             var table = await _getTableObject();
@@ -61,6 +43,26 @@ namespace nicold.visualstudio.to.lametric.Services
             return seg.FirstOrDefault();
         }
 
+        public async Task<bool> UpdateUrl(string email, string url)
+        {
+            var table = await _getTableObject();
+
+            var entity = new DynamicTableEntity(email, email);
+            entity.ETag = "*";
+            entity.Properties.Add("VSO_Url", new EntityProperty(url));
+            var mergeOperation = TableOperation.Merge(entity);
+
+            try
+            {
+                await table.ExecuteAsync(mergeOperation);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         private async Task<CloudTable> _getTableObject()
         {
             var cloudStorageAccount = CloudStorageAccount.Parse(_settings.BlobStorageConnectionString);
@@ -72,5 +74,6 @@ namespace nicold.visualstudio.to.lametric.Services
             return table;
         }
 
+        
     }
 }

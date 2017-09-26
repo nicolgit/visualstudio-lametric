@@ -31,6 +31,7 @@ export class HomeComponent implements OnInit {
             this.userName = this.getCookie("lametric-name") == "" ? "World" : decodeURIComponent(this.getCookie("lametric-name"));
             this.accessToken = this.getCookie("lametric-auth-accesstoken");
             this.isAuthenticated = this.accessToken != "";
+            this.testUrl = this.getCookie("lametric-vso-url");
         });
     }
 

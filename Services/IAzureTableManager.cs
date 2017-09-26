@@ -10,5 +10,6 @@ namespace nicold.visualstudio.to.lametric.Services
     {
         Task<bool> UpdateRow(LametricEntity row);
         Task<LametricEntity> GetRow(string email);
+        Task<bool> UpdateUrl(string email, string url);
     }
 }

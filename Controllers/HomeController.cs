@@ -12,10 +12,14 @@ namespace nicold_visualstudio_to_lametric.Controllers
     public class HomeController : Controller
     {
         IVisualStudioEndpoints _visualstudio;
-        public HomeController(IVisualStudioEndpoints visualstudio)
+        IAzureTableManager _azureTableManager;
+
+        public HomeController(IVisualStudioEndpoints visualstudio, IAzureTableManager azureTableManager)
         {
             _visualstudio = visualstudio;
+            _azureTableManager = azureTableManager;
         }
+
         public IActionResult Index()
         {
             return View();
@@ -28,7 +32,7 @@ namespace nicold_visualstudio_to_lametric.Controllers
         }
 
         [HttpPost]
-        async public Task<string> Test([FromBody]TestAPIParameters input)
+        async public Task<string> Test([FromBody]UrlParameter input)
         {
             _visualstudio.access_token = input.auth_token;
             var result = await _visualstudio.GetLatestChangesets(input.url);
@@ -40,6 +44,22 @@ namespace nicold_visualstudio_to_lametric.Controllers
             else
             {
                 return $"Error {result.Error} - {result.ErrorDescription}";
+            }
+        }
+
+        [HttpPost]
+        async public Task<string> UpdateURL([FromBody]UrlParameter input)
+        {
+            _visualstudio.access_token = input.auth_token;
+            var profile = await _visualstudio.GetUserProfileAsync();
+
+            if (string.IsNullOrEmpty(profile.Error))
+            {
+                return await _azureTableManager.UpdateUrl(profile.emailAddress, input.url) ? "OK": "Error";
+            }
+            else
+            {
+                return $"Error {profile.Error} - {profile.ErrorDescription}";
             }
         }
     }
