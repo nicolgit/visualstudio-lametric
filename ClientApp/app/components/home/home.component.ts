@@ -1,22 +1,23 @@
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { Headers, RequestOptions, Http } from '@angular/http';
 
+import { TestApiOutput } from "../Model/myModel"
 
 @Component({
     selector: 'home',
     templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
-
+    
     errorString = "";
-
+    testOutput = "";
     userName = "-";
-
     accessToken = "";
     isAuthenticated = false;
+    testUrl= "https://<mytenant>.visualstudio.com/<myproject>"
 
-
-    constructor(private activatedRoute: ActivatedRoute) { }
+    constructor(private activatedRoute: ActivatedRoute, private http: Http) { }
 
     ngOnInit(): void {
         this.activatedRoute.queryParams.subscribe((params: Params) => {
@@ -35,6 +36,23 @@ export class HomeComponent implements OnInit {
 
     public signin() {
         window.location.href = 'https://app.vssps.visualstudio.com/oauth2/authorize?client_id=CE2BF6DB-465F-45D9-9062-2CAFFFCF12B7&response_type=Assertion&state=/&scope=vso.code&redirect_uri=https://blogs.msdn.com/nicold';
+    }
+
+    public test() {
+        let body = {
+            url: this.testUrl, auth_token: this.getCookie("lametric-auth-accesstoken")
+        };
+
+        this.errorString = "";
+
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+
+        this.http.post("/Home/Test", body).subscribe(data => {
+            this.errorString = data.text("iso-8859");
+        });
+
+        
+    
     }
 
     public signout() {

@@ -3,15 +3,17 @@
 <p>this tools allows to see on on your Lametric smart clock a notification each time someone check in a changeset. 
 
 <p><button *ngIf="! isAuthenticated" (click)="signin()">Access to VisualStudio</button></p>
-<b style="color:red">{{errorString}}</b>
+
 
 
 <div *ngIf="isAuthenticated">
     <p>Visual Studio project full URL</p>
-    <p><input maxlength="255" style="width: 500px"/><button (click)="test()">Test</button></p>
+    <p><input maxlength="255" style="width: 500px" [(ngModel)]="testUrl" /><button (click)="test()">Test</button></p>
     <p><i>i.e. https://caledos.visualstudio.com/myproject </i></p>
     <p><button (click)="signout()">Signout</button></p>
 </div>
+
+<b style="color:red">{{errorString}}</b>
 
 <p></p>
 <p>More Information</p>

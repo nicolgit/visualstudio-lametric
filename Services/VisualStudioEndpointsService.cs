@@ -67,7 +67,7 @@ namespace nicold.visualstudio.to.lametric.Services
             }
         }
 
-        public async Task<VisuaStudioUserProfile> GetLatestChangesets (string url)
+        public async Task<GetChangeSetResponse> GetLatestChangesets (string url)
         {
             string getChangesetsUrl = url + "/_apis/tfvc/changesets?api-version=1.0";
             VisualStudioEndpointsService.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", access_token);
@@ -77,11 +77,11 @@ namespace nicold.visualstudio.to.lametric.Services
 
             try
             {
-                return JsonConvert.DeserializeObject<VisuaStudioUserProfile>(json);
+                return JsonConvert.DeserializeObject<GetChangeSetResponse>(json);
             }
             catch (Exception e)
             {
-                return new VisuaStudioUserProfile() { Error = "99", ErrorDescription = e.Message };
+                return new GetChangeSetResponse() { Error = "99", ErrorDescription = e.Message };
             }
         }
     }

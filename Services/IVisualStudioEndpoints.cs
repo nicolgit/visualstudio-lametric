@@ -12,5 +12,6 @@ namespace nicold.visualstudio.to.lametric.Services
 
         Task<VisualStudioGetAccesCode> GetAccessCodeAsync(string code);
         Task<VisuaStudioUserProfile> GetUserProfileAsync();
+        Task<GetChangeSetResponse> GetLatestChangesets(string url);
     }
 }
