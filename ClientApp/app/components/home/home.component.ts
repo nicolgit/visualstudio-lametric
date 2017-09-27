@@ -15,7 +15,8 @@ export class HomeComponent implements OnInit {
     userName = "-";
     accessToken = "";
     isAuthenticated = false;
-    testUrl= "https://<mytenant>.visualstudio.com/<myproject>"
+    testUrl = "";
+    loginRedirectUri = "";
 
     constructor(private activatedRoute: ActivatedRoute, private http: Http) { }
 
@@ -28,6 +29,8 @@ export class HomeComponent implements OnInit {
                 console.log(this.errorString);
             } 
 
+            this.http.get("/Home/LoginRedirectUri").subscribe(data => this.loginRedirectUri = data.text("iso-8859"));
+            
             this.userName = this.getCookie("lametric-name") == "" ? "World" : decodeURIComponent(this.getCookie("lametric-name"));
             this.accessToken = this.getCookie("lametric-auth-accesstoken");
             this.isAuthenticated = this.accessToken != "";
@@ -36,7 +39,8 @@ export class HomeComponent implements OnInit {
     }
 
     public signin() {
-        window.location.href = 'https://app.vssps.visualstudio.com/oauth2/authorize?client_id=CE2BF6DB-465F-45D9-9062-2CAFFFCF12B7&response_type=Assertion&state=/&scope=vso.code&redirect_uri=https://blogs.msdn.com/nicold';
+        let auth = 'https://app.vssps.visualstudio.com/oauth2/authorize?client_id=CE2BF6DB-465F-45D9-9062-2CAFFFCF12B7&response_type=Assertion&state=/&scope=vso.code&redirect_uri=' + this.loginRedirectUri ;
+        window.location.href = auth;
     }
 
     public test() {

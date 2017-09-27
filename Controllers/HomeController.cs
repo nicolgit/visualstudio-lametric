@@ -13,11 +13,13 @@ namespace nicold_visualstudio_to_lametric.Controllers
     {
         IVisualStudioEndpoints _visualstudio;
         IAzureTableManager _azureTableManager;
+        ISettings _settings;
 
-        public HomeController(IVisualStudioEndpoints visualstudio, IAzureTableManager azureTableManager)
+        public HomeController(IVisualStudioEndpoints visualstudio, IAzureTableManager azureTableManager, ISettings settings)
         {
             _visualstudio = visualstudio;
             _azureTableManager = azureTableManager;
+            _settings = settings;
         }
 
         public IActionResult Index()
@@ -127,6 +129,12 @@ namespace nicold_visualstudio_to_lametric.Controllers
             }
 
             return result;
+        }
+
+        [HttpGet]
+        public string LoginRedirectUri()
+        {
+            return _settings.AppCallback;
         }
     }
 }
