@@ -31,6 +31,26 @@ namespace nicold.visualstudio.to.lametric.Services
                 callback
                 );
 
+            return await _getTokenAndRefresh(body);
+        }
+
+        public async Task<VisualStudioGetAccesCode> RefreshAccessCode (string refresh_token)
+        {
+            var appSecret = _settings.AppSecret;
+            var callback = _settings.AppCallback;
+
+            string body = String.Format(
+                "client_assertion_type=urn:ietf:params:oauth:client-assertion-type:jwt-bearer&client_assertion={0}&grant_type=refresh_token&assertion={1}&redirect_uri={2}",
+                HttpUtility.UrlEncode(appSecret),
+                HttpUtility.UrlEncode(refresh_token),
+                callback
+                );
+
+            return await _getTokenAndRefresh(body);
+        }
+
+        private async Task<VisualStudioGetAccesCode> _getTokenAndRefresh(string body)
+        {
             var content = new StringContent(body);
             content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/x-www-form-urlencoded");
 
@@ -45,8 +65,8 @@ namespace nicold.visualstudio.to.lametric.Services
             }
             catch (Exception e)
             {
-                return new VisualStudioGetAccesCode() { Error = "99", ErrorDescription = e.Message };   
-            }            
+                return new VisualStudioGetAccesCode() { Error = "99", ErrorDescription = e.Message };
+            }
         }
 
         public async Task<VisuaStudioUserProfile> GetUserProfileAsync()

@@ -33,9 +33,9 @@ namespace nicold.visualstudio.to.lametric.Services
 
             TableQuery<LametricEntity> query = new TableQuery<LametricEntity>().Where(
                 TableQuery.CombineFilters(
-                    TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, email),
+                    TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, email.Replace('@','-')),
                     TableOperators.And,
-                    TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal, email)));
+                    TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal, email.Replace('@', '-'))));
 
             TableContinuationToken token = null;
             TableQuerySegment<LametricEntity> seg = await table.ExecuteQuerySegmentedAsync<LametricEntity>(query, token);
@@ -47,7 +47,7 @@ namespace nicold.visualstudio.to.lametric.Services
         {
             var table = await _getTableObject();
 
-            var entity = new DynamicTableEntity(email, email);
+            var entity = new DynamicTableEntity(email.Replace('@', '-'), email.Replace('@', '-'));
             entity.ETag = "*";
             entity.Properties.Add("VSO_Url", new EntityProperty(url));
             var mergeOperation = TableOperation.Merge(entity);

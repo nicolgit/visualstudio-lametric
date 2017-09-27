@@ -62,7 +62,6 @@ namespace nicold_visualstudio_to_lametric.Controllers
                     lametricEntity = new LametricEntity(profile.emailAddress);
                     lametricEntity.Email = profile.emailAddress;
                     lametricEntity.VSO_Url = "";
-                    lametricEntity.LastChangeset = 0;
                 }
 
                 lametricEntity.AccessToken = token.access_token;

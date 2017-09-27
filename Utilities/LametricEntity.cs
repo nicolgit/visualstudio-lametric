@@ -10,8 +10,8 @@ namespace nicold.visualstudio.to.lametric.Utilities
     {
         public LametricEntity(string email)
         {
-            this.PartitionKey = email;
-            this.RowKey = email;
+            this.PartitionKey = email.Replace('@','-');
+            this.RowKey = email.Replace('@', '-');
         }
 
         public LametricEntity() { }
@@ -20,7 +20,5 @@ namespace nicold.visualstudio.to.lametric.Utilities
         public string VSO_Url { get; set; }
         public string AccessToken { get; set; }
         public string RefreshToken { get; set; }
-
-        public int LastChangeset { get; set; }
     }
 }

@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
             this.userName = this.getCookie("lametric-name") == "" ? "World" : decodeURIComponent(this.getCookie("lametric-name"));
             this.accessToken = this.getCookie("lametric-auth-accesstoken");
             this.isAuthenticated = this.accessToken != "";
-            this.testUrl = this.getCookie("lametric-vso-url");
+            this.testUrl = this.getCookie("lametric-vso-url") == "" ? "" : decodeURIComponent(this.getCookie("lametric-vso-url"));
         });
     }
 
@@ -49,6 +49,20 @@ export class HomeComponent implements OnInit {
         let headers = new Headers({ 'Content-Type': 'application/json' });
 
         this.http.post("/Home/Test", body).subscribe(data => {
+            this.errorString = data.text("iso-8859");
+        });
+    }
+
+    public save() {
+        let body = {
+            url: this.testUrl, auth_token: this.getCookie("lametric-auth-accesstoken")
+        };
+
+        this.errorString = "";
+
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+
+        this.http.post("/Home/UpdateURL", body).subscribe(data => {
             this.errorString = data.text("iso-8859");
         });
     }
