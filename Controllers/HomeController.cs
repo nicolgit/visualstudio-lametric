@@ -66,13 +66,13 @@ namespace nicold_visualstudio_to_lametric.Controllers
         }
 
         [HttpGet]
-        async public Task<LametricMessage> Lametric(string id)
+        async public Task<LametricMessage> Lametric([FromQuery] string email)
         {
             LametricMessage result = new LametricMessage();
 
             try
             {
-                var infos = await _azureTableManager.GetRow(id);
+                var infos = await _azureTableManager.GetRow(email);
 
                 var token = await _visualstudio.RefreshAccessCode(infos.RefreshToken);
 
@@ -114,7 +114,7 @@ namespace nicold_visualstudio_to_lametric.Controllers
                     result = new LametricMessage();
                     result.frames.Add(new Frame()
                     {
-                        icon = "1",
+                        icon = "a4297",
                         text = $"no changesets yet!"
                     });
 
