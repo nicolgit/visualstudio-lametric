@@ -34,7 +34,7 @@ namespace nicold.visualstudio.to.lametric.Utilities
         public bool? commentTruncated { get; set; }
     }
 
-    public class GetChangeSetResponse: VisualStudio_Response
+    public class GetChangeSetResponse: VisualStudio_Response_Base
     {
         public int count { get; set; }
         public List<Value> value { get; set; }

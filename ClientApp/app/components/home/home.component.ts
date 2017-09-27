@@ -51,9 +51,6 @@ export class HomeComponent implements OnInit {
         this.http.post("/Home/Test", body).subscribe(data => {
             this.errorString = data.text("iso-8859");
         });
-
-        
-    
     }
 
     public signout() {

@@ -44,14 +44,14 @@ namespace nicold_visualstudio_to_lametric.Controllers
             if (!string.IsNullOrEmpty(code) && !string.IsNullOrEmpty(state))
             {
                 var token = await _visualStudioEndpoints.GetAccessCodeAsync(code);
-                if (!string.IsNullOrEmpty(token.Error))
+                if (!string.IsNullOrEmpty(token.Error) && !string.IsNullOrEmpty(token.message))
                     {
                     return this.RedirectToAction("Index", "Home", token);
                     }
                 _visualStudioEndpoints.access_token = token.access_token;
 
                 var profile = await _visualStudioEndpoints.GetUserProfileAsync();
-                if (!string.IsNullOrEmpty(profile.Error))
+                if (!string.IsNullOrEmpty(profile.Error) && !string.IsNullOrEmpty(token.message))
                 {
                     return this.RedirectToAction("Index", "Home", profile);
                 }

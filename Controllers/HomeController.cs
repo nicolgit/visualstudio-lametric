@@ -37,13 +37,13 @@ namespace nicold_visualstudio_to_lametric.Controllers
             _visualstudio.access_token = input.auth_token;
             var result = await _visualstudio.GetLatestChangesets(input.url);
 
-            if (string.IsNullOrEmpty(result.Error))
+            if (string.IsNullOrEmpty(result.Error) && string.IsNullOrEmpty(result.message))
             {
                 return $"OK! query returned {result.count} items!";
             }
             else
             {
-                return $"Error {result.Error} - {result.ErrorDescription}";
+                return $"Error {result.Error} - {result.ErrorDescription} - {result.message}";
             }
         }
 
@@ -53,7 +53,7 @@ namespace nicold_visualstudio_to_lametric.Controllers
             _visualstudio.access_token = input.auth_token;
             var profile = await _visualstudio.GetUserProfileAsync();
 
-            if (string.IsNullOrEmpty(profile.Error))
+            if (string.IsNullOrEmpty(profile.Error) && string.IsNullOrEmpty(profile.message))
             {
                 return await _azureTableManager.UpdateUrl(profile.emailAddress, input.url) ? "OK": "Error";
             }

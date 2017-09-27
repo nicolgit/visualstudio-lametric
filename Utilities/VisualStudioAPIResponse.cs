@@ -5,13 +5,7 @@ using System.Threading.Tasks;
 
 namespace nicold.visualstudio.to.lametric.Utilities
 {
-    public class VisualStudio_Response
-    {
-        public string Error { get; set; }
-        public string ErrorDescription { get; set; }
-    }
-
-    public class VisualStudioGetAccesCode : VisualStudio_Response
+    public class VisualStudioGetAccesCode : VisualStudio_Response_Base
     { 
         public string access_token { get; set; }
         public string token_type { get; set; }
@@ -20,7 +14,7 @@ namespace nicold.visualstudio.to.lametric.Utilities
         public string scope { get; set; }
     }
 
-    public class VisuaStudioUserProfile: VisualStudio_Response
+    public class VisuaStudioUserProfile: VisualStudio_Response_Base
     {
         public string emailAddress { get; set; }
         public string displayName { get; set; }
