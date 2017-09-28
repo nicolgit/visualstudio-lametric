@@ -105,7 +105,7 @@ namespace nicold_visualstudio_to_lametric.Controllers
                     result = new LametricMessage();
                     result.frames.Add(new Frame()
                     {
-                        icon = "1",
+                        icon = "#9672",
                         text = $"{user} checked in {time} ago"
                     });
                 }
@@ -114,7 +114,7 @@ namespace nicold_visualstudio_to_lametric.Controllers
                     result = new LametricMessage();
                     result.frames.Add(new Frame()
                     {
-                        icon = "a4297",
+                        icon = "#9672",
                         text = $"no changesets yet!"
                     });
 
