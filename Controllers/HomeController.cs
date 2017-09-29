@@ -76,38 +76,69 @@ namespace nicold_visualstudio_to_lametric.Controllers
 
                 var token = await _visualstudio.RefreshAccessCode(infos.RefreshToken);
 
-                infos.AccessToken = token.access_token;
-                infos.RefreshToken = token.refresh_token;
-                await _azureTableManager.UpdateRow(infos);
-
-                _visualstudio.access_token = infos.AccessToken;
-                var changeset = await _visualstudio.GetLatestChangesets(infos.VSO_Url);
-
-                if (changeset.count > 0)
+                if (string.IsNullOrEmpty(token.Error))
                 {
-                    string user = changeset.value.FirstOrDefault().checkedInBy.displayName;
-                    string time = "";
-                    var diff = (DateTime.Now - changeset.value.FirstOrDefault().createdDate);
+                    infos.AccessToken = token.access_token;
+                    infos.RefreshToken = token.refresh_token;
 
-                    if (diff.TotalDays >= 1)
-                    {
-                        time = $"{(int)diff.TotalDays} days";
-                    }
-                    else if (diff.TotalHours >= 1)
-                    {
-                        time = $"{(int)diff.TotalHours} hours";
-                    }
-                    else if (diff.TotalMinutes >= 1)
-                    {
-                        time = $"{(int)diff.TotalMinutes} minutes";
-                    }
+                    var repositoryName = infos.VSO_Url.Substring(1 + infos.VSO_Url.LastIndexOf('/'));
 
-                    result = new LametricMessage();
-                    result.frames.Add(new Frame()
+                    await _azureTableManager.UpdateRow(infos);
+
+                    _visualstudio.access_token = infos.AccessToken;
+                    var changeset = await _visualstudio.GetLatestChangesets(infos.VSO_Url);
+
+                    if (changeset != null && changeset.count > 0)
                     {
-                        icon = "#9672",
-                        text = $"{user} checked in {time} ago"
-                    });
+                        var message = !string.IsNullOrEmpty(changeset.value.FirstOrDefault().comment) ? $"'{changeset.value.FirstOrDefault().comment}' " : "";
+                        string user = changeset.value.FirstOrDefault().checkedInBy.displayName;
+                        string time = "";
+                        var diff = (DateTime.Now - changeset.value.FirstOrDefault().createdDate);
+
+                        if (diff.TotalDays >= 1)
+                        {
+                            time = $"{(int)diff.TotalDays} days";
+                        }
+                        else if (diff.TotalHours >= 1)
+                        {
+                            time = $"{(int)diff.TotalHours} hours";
+                        }
+                        else if (diff.TotalMinutes >= 1)
+                        {
+                            time = $"{(int)diff.TotalMinutes} minutes";
+                        }
+
+                        result = new LametricMessage();
+                        result.frames.Add(new Frame()
+                        {
+                            icon = "#9672",
+                            text = repositoryName
+                        });
+                        result.frames.Add(new Frame()
+                        {
+                            icon = "#9672",
+                            text = $"{user} checked in {message}{time} ago"
+                        });
+                    }
+                    else if (!string.IsNullOrEmpty(changeset.ErrorDescription))
+                    {
+                        result = new LametricMessage();
+                        result.frames.Add(new Frame()
+                        {
+                            icon = "#9672",
+                            text = changeset.ErrorDescription
+                        });
+                    }
+                    else
+                    {
+                        // unable to refresh access token
+                        result = new LametricMessage();
+                        result.frames.Add(new Frame()
+                        {
+                            icon = "#9672",
+                            text = "no changesets... yet!"
+                        });
+                    }
                 }
                 else
                 {
@@ -115,10 +146,10 @@ namespace nicold_visualstudio_to_lametric.Controllers
                     result.frames.Add(new Frame()
                     {
                         icon = "#9672",
-                        text = $"no changesets yet!"
+                        text = $"unable to refresh access token {token.Error} {token.ErrorDescription}"
                     });
-
                 }
+                
             }
             catch (Exception e)
             {
