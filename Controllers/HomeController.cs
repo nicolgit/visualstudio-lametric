@@ -99,7 +99,7 @@ namespace nicold_visualstudio_to_lametric.Controllers
                     }
                     else if (diff.TotalMinutes >= 1)
                     {
-                        time = $"{(int)diff.TotalSeconds} minutes";
+                        time = $"{(int)diff.TotalMinutes} minutes";
                     }
 
                     result = new LametricMessage();
