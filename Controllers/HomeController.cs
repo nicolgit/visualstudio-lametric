@@ -41,7 +41,13 @@ namespace nicold_visualstudio_to_lametric.Controllers
 
             if (string.IsNullOrEmpty(result.Error) && string.IsNullOrEmpty(result.message))
             {
-                return $"OK! query returned {result.count} items!";
+                var output = $"OK, working! query returned {result.count} items.";
+                if (result.count>0)
+                {
+                    output += $"last check-in by {result.value[0].author.uniqueName}";
+                }
+
+                return output;
             }
             else
             {
