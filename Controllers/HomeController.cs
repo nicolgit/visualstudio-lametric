@@ -111,12 +111,12 @@ namespace nicold_visualstudio_to_lametric.Controllers
                         result = new LametricMessage();
                         result.frames.Add(new Frame()
                         {
-                            icon = "#9672",
+                            icon = "i9672",
                             text = repositoryName
                         });
                         result.frames.Add(new Frame()
                         {
-                            icon = "#9672",
+                            icon = "i9672",
                             text = $"{user} checked in {message}{time} ago"
                         });
                     }
