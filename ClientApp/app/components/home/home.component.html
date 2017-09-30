@@ -4,8 +4,6 @@
 
 <p><button *ngIf="! isAuthenticated" (click)="signin()">Access to VisualStudio</button></p>
 
-
-
 <div *ngIf="isAuthenticated">
     <p>Visual Studio project full URL</p>
     <p><input maxlength="255" style="width: 500px" [(ngModel)]="testUrl" /> <button (click)="test()">Test</button> <button (click)="save()">Save</button></p>
@@ -21,10 +19,10 @@
 <ul>
     <li>Authenticate on visual studio using the button on this page</li>
     <li>Write the full URL of the VSO project you want to monitors checkins (TFS projects only, NO GIT at the moment)</li>
-    <li>Click the TEST to see if everything is working fine</li>
+    <li>Click the TEST if everything is working fine</li>
     <li>Click SAVE</li>
-    <li>On your LSametric smart clock sook for "Visual Studio Online Checkins" app</li>
-    <li>Write the email used to log in here in email field on Lametric!</li>
+    <li>On your Lametric smart clock look for "Visual Studio Online Checkins" app</li>
+    <li>Write the email used here to log in here in email field on Lametric!</li>
     <li>Enjoy your checkins:-)</li>
 </ul>
 
@@ -36,8 +34,9 @@
 </ul>
 
 <p>
-    <video loop controls>
+    <video loop controls preload="none">
         <source src="/lametric-visualstudio-final.mp4" type="video/mp4" />
         Your browser does not support the video tag.
     </video>
 </p>
+
