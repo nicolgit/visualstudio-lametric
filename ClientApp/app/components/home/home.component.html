@@ -1,6 +1,6 @@
 <h1>Hello, {{userName}}!</h1>
 <p>Welcome to your Visual Studio to Lametric connector</p>
-<p>this tools allows to see on on your Lametric smart clock a notification each time someone check in a changeset. 
+<p>this tools allows to see on on your <a href="https://www.lametric.com">Lametric smart clock</a> a notification each time someone check in a changeset. 
 
 <p><button *ngIf="! isAuthenticated" (click)="signin()">Access to VisualStudio</button></p>
 
@@ -17,10 +17,27 @@
 <b style="color:red">{{errorString}}</b>
 
 <p></p>
-<p>More Information</p>
+<h1>HOW TO</h1>
+<ul>
+    <li>Authenticate on visual studio using the button on this page</li>
+    <li>Write the full URL of the VSO project you want to monitors checkins (TFS projects only, NO GIT at the moment)</li>
+    <li>Click the TEST to see if everything is working fine</li>
+    <li>Click SAVE</li>
+    <li>On your LSametric smart clock sook for "Visual Studio Online Checkins" app</li>
+    <li>Write the email used to log in here in email field on Lametric!</li>
+    <li>Enjoy your checkins:-)</li>
+</ul>
 
+<h1>More Information</h1>
 <ul>
     <li><a href='https://blogs.msdn.microsoft.com/nicold'>NicolBlog</a> my blog on MSDN</li>
     <li><a href='https://www.linkedin.com/in/nicoladelfino'>My profile</a> on LinkedIn</li>
-    <li>All <a href=''>source code</a> available on github</li>
+    <li>All <a href='https://github.com/nicolgit/visualstudio-lametric'>source code</a> available on github</li>
 </ul>
+
+<p>
+    <video loop controls>
+        <source src="/lametric-visualstudio-final.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+    </video>
+</p>
