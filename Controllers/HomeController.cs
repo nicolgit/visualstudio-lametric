@@ -101,15 +101,15 @@ namespace nicold_visualstudio_to_lametric.Controllers
                         string time = "";
                         var diff = (DateTime.Now - changeset.value.FirstOrDefault().createdDate);
 
-                        if (diff.TotalDays >= 1)
+                        if (diff.TotalDays > 1)
                         {
                             time = $"{(int)diff.TotalDays} days";
                         }
-                        else if (diff.TotalHours >= 1)
+                        else if (diff.TotalHours > 1)
                         {
                             time = $"{(int)diff.TotalHours} hours";
                         }
-                        else if (diff.TotalMinutes >= 1)
+                        else if (diff.TotalMinutes > 1)
                         {
                             time = $"{(int)diff.TotalMinutes} minutes";
                         }
