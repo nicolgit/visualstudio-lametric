@@ -15,7 +15,7 @@ namespace nicold_visualstudio_to_lametric
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
         }
@@ -30,6 +30,7 @@ namespace nicold_visualstudio_to_lametric
             services.AddTransient<ISettings, SettingsService>();
             services.AddTransient<IVisualStudioEndpoints, VisualStudioEndpointsService>();
             services.AddTransient<IAzureTableManager, AzureTableManagerService>();
+            services.AddApplicationInsightsTelemetry();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
