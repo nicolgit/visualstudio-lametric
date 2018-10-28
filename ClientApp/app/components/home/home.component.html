@@ -2,14 +2,14 @@
 <p>Welcome to your Visual Studio to Lametric connector</p>
 <p>this tools allows to see on on your <a href="https://www.lametric.com">Lametric smart clock</a> a notification each time someone check in a changeset. 
 
-<p><button *ngIf="! isAuthenticated" (click)="signin()">Access to VisualStudio</button></p>
+<p><button *ngIf="! isAuthenticated" (click)="signin()" class="btn btn-success">Access to VisualStudio</button></p>
 
 <div *ngIf="isAuthenticated">
     <p>Visual Studio project full URL</p>
-    <p><input maxlength="255" style="width: 500px" [(ngModel)]="testUrl" /> <button (click)="test()">Test</button> <button (click)="save()">Save</button></p>
+    <p><input maxlength="255" style="width: 500px" [(ngModel)]="testUrl" /> <button (click)="test()" class="btn btn-warning">Test</button> <button (click)="save()" class="btn btn-success">Save</button></p>
     <p><i>i.e. https://caledos.visualstudio.com/myproject </i></p>
     
-    <p><button (click)="signout()">Signout</button></p>
+    <p><button (click)="signout()" class="btn btn-primary">Signout</button></p>
 </div>
 
 <b style="color:red">{{errorString}}</b>
@@ -17,7 +17,7 @@
 <p></p>
 <h1>HOW TO</h1>
 <ul>
-    <li>Authenticate on visual studio online (VSO) using the button on this page</li>
+    <li>Authenticate on visual studio online (VSO) using the button on this page </li>
     <li>Write the full URL of the VSO project you want to monitors checkins (TFS projects only, NO GIT at the moment)</li>
     <li>Click the TEST button to verify if everything is working fine</li>
     <li>Click the SAVE button</li>
